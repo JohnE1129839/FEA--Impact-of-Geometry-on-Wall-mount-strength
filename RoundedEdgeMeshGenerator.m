@@ -1,7 +1,7 @@
 clc; clear; close all;
 
-filename = "s3_rounded_rotated";
-stlFile = "./STLS/" + filename + ".STL";  % your STL file
+filename = "c3_off4";
+stlFile = "./STLs/" + filename + ".STL";  % your STL file
 Hmax = 2;                     % max mesh element size
 geoOrder = 'linear';              % 'linear' or 'quadratic'
 
@@ -33,9 +33,8 @@ fprintf('Number of elements: %d\n', size(elements,2));
 nodes = msh.Nodes * 1e-3;        % 2xN or 3xN array
 elements = msh.Elements;  % element connectivity
 
-edgeIDs = [5,4,3,2,7,9,12,10];  % array of edges you want
+edgeIDs = [5];  % array of edges you want
 edgeNodes = findNodes(msh, 'region', 'Edge', edgeIDs);
-%% 
 
 writematrix(nodes, "./Meshes/"+ filename + "_nodes.txt");
 writematrix(elements, "./Meshes/" + filename + "_elements.txt");

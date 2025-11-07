@@ -2,7 +2,7 @@
 E = 2.1e11; %N/m2
 h = 5e-3; %5mm plate
 v = 0.28;
-filename = "s3_rounded_rotated";
+filename = "c3_off4";
 nodes = readmatrix("./Meshes/" + filename + "_nodes.txt");
 elements = readmatrix("./Meshes/" + filename + "_elements.txt");
 semiNodes = load("./Meshes/" + filename + "_edgeNodes.txt");  
@@ -42,7 +42,7 @@ globalStiffness(semiDOFs,semiDOFs) = eye(length(semiDOFs));
 globalForce(semiDOFs) = 0;
 
 
-q_y = -10;   % N/m (downward uniform load)
+q_y = -10;   % N/cm (downward uniform load)
 q_x = 0;       % no horizontal traction
 tol = 1e-11;    % tolerance for detecting y=0 boundary
 
@@ -148,8 +148,6 @@ for e = 1:n_elems
 end
 nodalVM = nodalVM ./ nodeCount;
 
-
-%Uncomment this section if you do not have the pde addon
 figure;
 trisurf(elements', nodes(1,:), nodes(2,:), nodalVM, 'EdgeColor','none');
 view(2);              % top-down view for 2D
@@ -159,4 +157,4 @@ colormap('jet');
 title('Von Mises Stress');
 xlabel('X [m]');
 ylabel('Y [m]');
-max(nodalVM)
+disp(max(nodalVM))
