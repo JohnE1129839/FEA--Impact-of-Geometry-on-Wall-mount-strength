@@ -2,10 +2,10 @@
 E = 2.1e11; %N/m2
 h = 5e-3; %5mm plate
 v = 0.28;
-
-nodes = readmatrix("./Meshes/s1r_nodes.txt");
-elements = readmatrix("./Meshes/s1r_elements.txt");
-semiNodes = load('./Meshes/s1r_edgeNodes.txt');  
+filename = "s3_rounded_rotated";
+nodes = readmatrix("./Meshes/" + filename + "_nodes.txt");
+elements = readmatrix("./Meshes/" + filename + "_elements.txt");
+semiNodes = load("./Meshes/" + filename + "_edgeNodes.txt");  
 %% 
 
 n_nodes = size(nodes,2);
@@ -148,23 +148,15 @@ for e = 1:n_elems
 end
 nodalVM = nodalVM ./ nodeCount;
 
-%% --- Plot nodal-averaged von Mises stress
-figure;
-pdeplot(msh, 'XYData', nodalVM, 'ColorMap', 'jet', ...
-        'Deformation', [Ux Uy], 'DeformationScaleFactor', 100);
-axis equal tight
-title('Nodal-averaged von Mises Stress (Deformed Shape)');
-colorbar
-
-max(nodalVM)
 
 %Uncomment this section if you do not have the pde addon
-% figure;
-% trisurf(elements', nodes(1,:), nodes(2,:), nodalVM, 'EdgeColor','none');
-% view(2);              % top-down view for 2D
-% axis equal;           % equal scaling
-% colorbar;
-% colormap('jet');
-% title('Von Mises Stress');
-% xlabel('X [m]');
-% ylabel('Y [m]');
+figure;
+trisurf(elements', nodes(1,:), nodes(2,:), nodalVM, 'EdgeColor','none');
+view(2);              % top-down view for 2D
+axis equal;           % equal scaling
+colorbar;
+colormap('jet');
+title('Von Mises Stress');
+xlabel('X [m]');
+ylabel('Y [m]');
+max(nodalVM)
